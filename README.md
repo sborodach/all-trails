@@ -8,12 +8,13 @@ Galvanize DSI, Project 1
 
 _Features of Interest_
 1. WHO
-  * 1. Proportion (%) of births attended by skilled health personnel & Death Rates at Birth
-  * 2. Diseases, as related to alcohol consumtption
-  * 3. Traffic accidents as related to population alcohol consumption
-  * 4. Mental health and alcohol consumption
+  * Proportion (%) of births attended by skilled health personnel & Death Rates at Birth
+  * Diseases, as related to alcohol consumtption
+  * Traffic accidents as related to population alcohol consumption
+  * Mental health and alcohol consumption
 2. Amazon
-  * 
+  * measure different features of users to suggest explanation for review pattern
+3. 
 
 _Prospective Statistical Methods_
   * Maximum-likelihood estimation 
