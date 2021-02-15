@@ -2,11 +2,18 @@
 Galvanize DSI, Project 1
 
 **Probject Proposals**
-1. Continued analysis of WHO European Health for All database
-2. 
+1. Analysis of WHO European Health for All database
+2. Amazon reviews: which users leave more positive or negative views and why
+3. 
 
-_Points of Interest_
-1. 
+_Features of Interest_
+1. WHO
+  * 1. Proportion (%) of births attended by skilled health personnel & Death Rates at Birth
+  * 2. Diseases, as related to alcohol consumtption
+  * 3. Traffic accidents as related to population alcohol consumption
+  * 4. Mental health and alcohol consumption
+2. Amazon
+  * 
 
 _Prospective Statistical Methods_
   * Maximum-likelihood estimation 
