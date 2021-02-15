@@ -11,5 +11,5 @@ _Points of Interest_
 _Prospective Statistical Methods_
   * Maximum-likelihood estimation 
   * Confidence interval of a statistic 
-  * Hypothesis testing (HYPOTHESIZE BEFORE LOOKING AT THE DATA) 
-  * Bayesian hypothesis testing 
+  * Hypothesis testing (hypothesizing prior to engaging data) 
+  * Bayesian hypothesis testing
