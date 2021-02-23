@@ -13,4 +13,3 @@ def welch_test_statistic(sample_1, sample_2):
     denominator_sq = (np.var(sample_1) / len(sample_1)) + \
                         (np.var(sample_2) / len(sample_2))
     return numerator / np.sqrt(denominator_sq)
-
