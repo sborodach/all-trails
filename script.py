@@ -1,4 +1,6 @@
 # equation to calculate degrees of freedom
+import numpy as np
+
 def welch_satterhwaithe_df(sample_1, sample_2):
     ss1 = len(sample_1)
     ss2 = len(sample_2)
