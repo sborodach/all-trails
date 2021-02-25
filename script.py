@@ -266,3 +266,7 @@ def compare_3_and_5_star_ratings(df):
         print('Rejcet H0')
     else:
         print('Fail to reject H0')
+        
+scs.ttest_ind(four_stars_distribution, five_stars_distribution , equal_var= False)
+scs.ttest_ind(three_stars_distribution, four_stars_distribution , equal_var= False)
+scs.ttest_ind(three_stars_distribution, five_stars_distribution , equal_var= False)
