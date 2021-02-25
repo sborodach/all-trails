@@ -22,8 +22,10 @@ The null hypothesis for each test is nearly the same: comments are left at an eq
 <br/><br/><br/><br/><br/>
 We can see that the p-value for 3/5 and 4/5 star comparisons are below the significance level, while the 3/4 comparison is above. Thus, there is sufficient evidence to suggest that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while there evidence is lacking that 3 and 4 star reviewers leave comments at different rates. This confirms predictions based on the EDA.
 <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+
 ### Further Study
-After learning NLP, I would like to create summaries based on comments left by reviewers in each of the 5 star raating categories. I am most curious to learn if 4-star reviewers leave comments than their 5-star counterparts since they have some negative feedback or constructive criticsm to share in their reviews. <br/>
+After learning NLP, I would like to create summaries based on comments left by reviewers in each of the 5 star raating categories. I am most curious to learn if 4-star reviewers leave comments than their 5-star counterparts since they have some negative feedback or constructive criticsm to share in their reviews.
+<br/>
 
 **Thank you**
 to Juliana Duncan, Dan Rupp, and Kiara Hearn for their guidance and insight throughout this project.
