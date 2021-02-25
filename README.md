@@ -8,7 +8,11 @@ alltrails.com/us provides information and user reviews on hikes in the U.S. I fr
 I built a web-scraper using selenium to click through a trail's webpage to display all the reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. Here are images of the scraper in action:
 
 ### Some basic EDA
-Next I perfromed some 
+After converting the mongo collections into pandas dataframe, I collected this data:
+
+![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
+
+![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
 
 ### Comparing 3, 4, and 5 stars
 The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. The results show that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while there is insufficient evidence to 
@@ -22,9 +26,6 @@ The null hypothesis for each test is nearly the same: comments are left at an eq
 **Further Study:**
     *  Use NLP to create summaries based on comments left by reviewers with 1-5 stars
 
-![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
-
-![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
 
 ![reject or fail to](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png)
 
