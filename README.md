@@ -4,8 +4,7 @@
 alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I noticed that 5-star reviewers often leave no comment with their review. Similarly, it seemed to me that 4-star reviewers tend to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers since they have some feedback regarding their experience, while 5-star reviewers only have positive remarks and so leave comments less often. This project is my first step in answering this question by grouping reviewers based on star number and comparing the rates of comments they leave.
 
 ### Gathering the data
-I built a web-scraper using selenium that scrools and clicks through a trail's webpage to display all hundreds or thousands of reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. Check out selenium in action:
-![selenium](https://github.com/sborodach/all-trails/blob/main/images/selenium.gif)
+I built a web-scraper using selenium to scroll through a trail's webpage and click through to display all hundreds or thousands of reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. (Check out a gif of selenium in action at the end.)
 
 ### Some basic EDA
 After converting the mongo collections into a pandas dataframe, I graphed these. The first is a distribution of reviewer ratings and the second the percent of reviews with comments grouped by star rating.
@@ -32,3 +31,5 @@ After learning NLP, I would like to create summaries based on comments left by r
 to Juliana Duncan, Dan Rupp, and Kiara Hearn for their guidance and insight throughout this project.
 
 ![tech stack](https://github.com/sborodach/all-trails/blob/main/images/tech-stack.png)
+
+![selenium](https://github.com/sborodach/all-trails/blob/main/images/selenium.gif)
