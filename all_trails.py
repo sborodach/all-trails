@@ -159,114 +159,37 @@ def plot_percent_comments_left(df):
     ax.set_ylabel('% comments')
     _ = ax.set_title(f'% Comments Left by Reviewers')
     # _ = ax.legend()
-    
-def welch_satterhwaithe_df(sample_1, sample_2):
-    '''calculates degrees of freedom for Welch's T-Test'''
-    ss1 = len(sample_1)
-    ss2 = len(sample_2)
-    df = (
-        ((np.var(sample_1)/ss1 + np.var(sample_2)/ss2)**(2.0)) / 
-        ((np.var(sample_1)/ss1)**(2.0)/(ss1 - 1) + (np.var(sample_2)/ss2)**(2.0)/(ss2 - 1))
-    )
-    return df
 
-def welch_test_statistic(sample_1, sample_2):
-    numerator = np.mean(sample_1) - np.mean(sample_2)
-    denominator_sq = (np.var(sample_1) / len(sample_1)) + \
-                        (np.var(sample_2) / len(sample_2))
-    return numerator / np.sqrt(denominator_sq)
-    
-def compare_4_and_5_star_ratings(df):
-    four_star_reviews = df[df['ratings'] == '4 Stars']['review_text'].count() # num of written reviews left by four-star reviewers
-    four_star_ratings = df[df['ratings']=='4 Stars']['ratings'].count() # num of four-star reviewers
-    five_star_reviews = df[df['ratings'] == '5 Stars']['review_text'].count() # num of written reviews left by five-star reviewers
-    five_star_ratings = df[df['ratings']=='5 Stars']['ratings'].count() # num of five-star reviewers
+three_star_reviews = df[df['ratings'] == '3 Stars']['review_text'].count() # num of written reviews left by five-star reviewers
+three_star_ratings = df[df['ratings']=='3 Stars']['ratings'].count() # num of five-star reviewers
+four_star_reviews = df[df['ratings'] == '4 Stars']['review_text'].count() # num of written reviews left by four-star reviewers
+four_star_ratings = df[df['ratings']=='4 Stars']['ratings'].count() # num of four-star reviewers
+five_star_reviews = df[df['ratings'] == '5 Stars']['review_text'].count() # num of written reviews left by five-star reviewers
+five_star_ratings = df[df['ratings']=='5 Stars']['ratings'].count() # num of five-star reviewers
 
-    table = pd.DataFrame({'Written Reviews': [four_star_reviews, five_star_reviews], 'Total Reviewers': [four_star_ratings, five_star_ratings]}, index = ['4 Stars', '5 Stars']).T
-    table = table.style.set_properties(**{'text-align': 'center'})
-    table
-    
-    four_stars_distribution = ([0] * (four_star_ratings - four_star_reviews)) + ([1] * four_star_reviews)
-    five_stars_distribution = (([0] * (five_star_ratings - five_star_reviews)) + ([1] * five_star_reviews))
+three_stars_distribution = (([0] * (three_star_ratings - three_star_reviews)) + ([1] * three_star_reviews))
+four_stars_distribution = ([0] * (four_star_ratings - four_star_reviews)) + ([1] * four_star_reviews)
+five_stars_distribution = (([0] * (five_star_ratings - five_star_reviews)) + ([1] * five_star_reviews))
 
-    print(f'Mean: \n   4 Stars {round(np.mean(four_stars_distribution),3)} \n   5 Stars {round(np.mean(five_stars_distribution),3)}\n')
-    print(f'Standard Deviation: \n   4 Stars {round(np.std(four_stars_distribution),3)} \n   5 Stars {round(np.std(five_stars_distribution),3)}')
-    
-    # calculate welch test statistic (function in scipt.py)
-    test_statistic = functions_.welch_test_statistic(four_stars_distribution, five_stars_distribution)
-    
-    # calculate degrees of freedom
-    dof = functions_.welch_satterhwaithe_df(four_stars_distribution, five_stars_distribution)
+table = pd.DataFrame({'Written Reviews': [four_star_reviews, five_star_reviews], 'Total Reviewers': [four_star_ratings, five_star_ratings]}, index = ['4 Stars', '5 Stars']).T
+table = table.style.set_properties(**{'text-align': 'center'})
+table
 
-    # set up distribution
-    students = scs.t(dof)
-    
-    p_value = students.cdf(-test_statistic) + (1 - students.cdf(test_statistic))
-    print("p-value for average written reviews: {:2.2f}".format(p_value))
-    if p_value < 0.017:
-        print('Rejcet H0')
-    else:
-        print('Fail to reject H0')
-        
-def compare_3_and_4_star_ratings(df):
-    three_star_reviews = df[df['ratings'] == '3 Stars']['review_text'].count() # num of written reviews left by five-star reviewers
-    three_star_ratings = df[df['ratings']=='3 Stars']['ratings'].count() # num of five-star reviewers
-    four_star_reviews = df[df['ratings'] == '4 Stars']['review_text'].count() # num of written reviews left by four-star reviewers
-    four_star_ratings = df[df['ratings']=='4 Stars']['ratings'].count() # num of four-star reviewers
-    
-    table = pd.DataFrame({'Written Reviews': [three_star_reviews, four_star_reviews], 'Total Reviewers': [three_star_ratings, four_star_ratings]}, index = ['3 Stars', '4 Stars']).T
-    table = table.style.set_properties(**{'text-align': 'center'})
-    table
-    
-    three_stars_distribution = (([0] * (three_star_ratings - three_star_reviews)) + ([1] * three_star_reviews))
+four_v_five = scs.ttest_ind(four_stars_distribution, five_stars_distribution , equal_var= False)
+three_v_four = scs.ttest_ind(three_stars_distribution, four_stars_distribution , equal_var= False)
+three_v_five = scs.ttest_ind(three_stars_distribution, five_stars_distribution , equal_var= False)
 
-    print(f'Mean: \n   3 Stars {round(np.mean(three_stars_distribution),3)} \n   4 Stars {round(np.mean(four_stars_distribution),3)}\n')
-    print(f'Standard Deviation: \n   3 Stars {round(np.std(three_stars_distribution),3)} \n   4 Stars {round(np.std(four_stars_distribution),3)}')
-    
-    # calculate welch test statistic (function in scipt.py)
-    test_statistic = functions_.welch_test_statistic(three_stars_distribution, four_stars_distribution)
-    
-    # calculate degrees of freedom
-    dof = functions_.welch_satterhwaithe_df(three_stars_distribution, four_stars_distribution)
+if four_v_five[1] < 0.017:
+    print('Rejcet H0')
+else:
+    print('Fail to reject H0')
 
-    # set up distribution
-    students = scs.t(dof)
-    
-    p_value = students.cdf(-test_statistic) + (1 - students.cdf(test_statistic))
-    print("p-value for average written reviews: {:2.2f}".format(p_value))
-    if p_value < 0.017:
-        print('Rejcet H0')
-    else:
-        print('Fail to reject H0')
+if three_v_four[1] < 0.017:
+    print('Rejcet H0')
+else:
+    print('Fail to reject H0')
 
-def compare_3_and_5_star_ratings(df):
-    three_star_reviews = df[df['ratings'] == '3 Stars']['review_text'].count() # num of written reviews left by five-star reviewers
-    three_star_ratings = df[df['ratings']=='3 Stars']['ratings'].count() # num of five-star reviewers
-    five_star_reviews = df[df['ratings'] == '5 Stars']['review_text'].count() # num of written reviews left by five-star reviewers
-    five_star_ratings = df[df['ratings']=='5 Stars']['ratings'].count() # num of five-star reviewers
-
-    table = pd.DataFrame({'Written Reviews': [three_star_reviews, five_star_reviews], 'Total Reviewers': [three_star_ratings, five_star_ratings]}, index = ['3 Stars', '5 Stars']).T
-    table = table.style.set_properties(**{'text-align': 'center'})
-    table
-    
-    print(f'Mean: \n   3 Stars {round(np.mean(three_stars_distribution),3)} \n   5 Stars {round(np.mean(five_stars_distribution),3)}\n')
-    print(f'Standard Deviation: \n   3 Stars {round(np.std(three_stars_distribution),3)} \n   5 Stars {round(np.std(five_stars_distribution),3)}')
-    
-    test_statistic = functions_.welch_test_statistic(three_stars_distribution, five_stars_distribution)
-    
-    # calculate degrees of freedom
-    dof = functions_.welch_satterhwaithe_df(three_stars_distribution, five_stars_distribution)
-
-    # set up distribution
-    students = scs.t(dof)
-    
-    p_value = students.cdf(-test_statistic3) + (1 - students.cdf(test_statistic))
-    print("p-value for average written reviews: {:2.2f}".format(p_value))
-    if p_value < 0.017:
-        print('Rejcet H0')
-    else:
-        print('Fail to reject H0')
-        
-scs.ttest_ind(four_stars_distribution, five_stars_distribution , equal_var= False)
-scs.ttest_ind(three_stars_distribution, four_stars_distribution , equal_var= False)
-scs.ttest_ind(three_stars_distribution, five_stars_distribution , equal_var= False)
+if three_v_five[1] < 0.017:
+    print('Rejcet H0')
+else:
+    print('Fail to reject H0')
