@@ -1,24 +1,35 @@
-# cap-stone-1
-Galvanize DSI, Project 1
+### Are some reviewers more likely to leave comments than others: <br/>    Comparing star rating reviews on AllTrails.com
 
-When I browse on All Trails to find a hike in at Bear Mountain in NY, I find myself looking to pick one hike to do, and wanting to easily have accurate and good information that can inform me if I will enjoy a specific hike. Reading through dozens of comments left by reviewers is boring and takes time, especially if I need to look through up to 5 trails before I find one with which I am satisfied. I think that recent comments left in the past 2-3 years are the most relevant, and having a summary of them would make selecting a trail ideal.
+### The story
+alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I noticed that 5-star reviewers often leave no comment with their review. Similarly, it seemed to me that 4-star reviewers tend to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers since they have some feedback regarding their experience, while 5-star reviewers only have positive remarks and so leave comments less often. This project is my first step in answering this question by grouping reviewers based on star number and comparing the rates of comments they leave.
 
-alltrails.com/us has information on many hiking trails here in the United States. I appreciate reading comments left by reviewers as they help me determine if a specific hike is for me, as well as what considerations I should take into account, like whether it's well-marked or heavily-trafficked. Reviews with 5 stars and no comment always stand out to me: if one had a great time on the hike, wouldn't you write what you loved about it? Similarly, 4-star reviews also stand out to me: what brings someone to leave a good review, but not a great one? Taking this one step further: when a 4-star reviewer leaves a comment, is it because they have something negative to say _with_ comments also stand out to me: The broad question I'm intersted in for this project is what brings a 4-star reviewer to leave a great review but leave out one star? Can this be determined from the comments that they leave? I hypothesize that 4-star reviewers are more inclined to leave a review, specifically 
+### Gathering the data
+I built a web-scraper using selenium to scroll through a trail's webpage and click through to display all hundreds or thousands of reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. (Check out a gif of selenium in action at the end.)
 
-_My Process_
-1. Create pipeline to get reviewer data for one trail. Took me many revisions to get pipeline to be efficient. It works like this:
-2. Get data for three trails, each with at least 400 reviews:
-    — 4 Stars: 47 / 206
-    — 5 Stars: 75 / 361
-3. H0: rates of comments left by 4 and 5 star reviewers is the same --> Welch's T-Test: Fail to reject H0.
-4. So I thought maybe if I have larger sample sizes the data will tell me something more intersting. With larger sample sizes, (fill in what happened, reject or not). Yes! Reject H0
-5. Went back and saved each trail stats to mongoDB so I could access it agaain later using to_pandas function in pyMongo.
-6. What about 3 star reviewers?
-7. Interstingly, for 5 different trails, each with at least 200 reviews, in each case the percentrage of 1 and 2 star reviews was less than _____ (fill in %_). I'm curious: how could I learn if there are more folks hiking these trails who whould leave a 1 or 2 stra review if they did leave a review?
+### Some basic EDA
+After converting the mongo collections into a pandas dataframe, I graphed these. The first is a distribution of reviewer ratings and the second the percent of reviews with comments grouped by star rating.
 
+Distribution of Ratings |  Percentage Comments
+:-------------------------:|:-------------------------:
+![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings-rates.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percentage_comments.png)
 
- 
+There are two things to notice here. First, 1 and 2 star reviewers are scarce, as is often the case with reviewers on passion sites (in conrast to, say, retail—think Amazon). More importantly for the question at hand: the 5-star comment percentage is lower than both 3 and 4 stars. From this we can already assume it is somewhat likely that comments are left less frequently by 5-star reviewers.
 
-**Further Study:**
-1. Refine pipeline to acquire hike reviewer data
-2. Use NLP to create summaries based on comments left by reviewers with 1-5 stars
+### Comparing 3, 4, and 5 stars
+The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. Accounting for the Bonferroni Correction, I set the significance level at .017 and calculated the p-values for each comparison using a Welch's T-Test. Here are the results:
+
+<img align="right" width="400" height="400" src="https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png">
+<br/><br/><br/><br/><br/>
+We can see that the p-value for 3/5 and 4/5 star comparisons are below the significance level, while the 3/4 comparison is above. Thus, there is sufficient evidence to suggest that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while there evidence is lacking that 3 and 4 star reviewers leave comments at different rates. This confirms predictions based on the EDA.
+<br/><br/><br/><br/><br/><br/><br/>
+
+### Further Study
+After learning NLP, I would like to create summaries based on comments left by reviewers in each of the 5 star raating categories. I am most curious to learn if 4-star reviewers leave comments than their 5-star counterparts since they have some negative feedback or constructive criticsm to share in their reviews.
+<br/>
+
+### Thank you
+to Juliana Duncan, Dan Rupp, and Kiara Hearn for their guidance and insight throughout this project.
+
+![tech stack](https://github.com/sborodach/all-trails/blob/main/images/tech-stack.png)
+
+![selenium](https://github.com/sborodach/all-trails/blob/main/images/selenium.gif)
