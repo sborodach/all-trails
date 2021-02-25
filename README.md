@@ -23,4 +23,4 @@ _My Process_
 1. Refine pipeline to acquire hike reviewer data
 2. Use NLP to create summaries based on comments left by reviewers with 1-5 stars
 
-![image]('https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png')
+![image](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
