@@ -1,5 +1,4 @@
-**AllTrails.com**
-### Can we predict if a reviewer will leave a written comment with their star rating?
+### AllTrails.com: Can we predict if a reviewer will leave a written comment with their star rating?
 
 ### The story
 alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I notced that 5-star reviewers often leave no comment with their review. Similarly, 4-star reviewers seemed to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers..., and I think the answer why is fairly intuitive.
@@ -10,7 +9,11 @@ I built a web-scraper using selenium to click through a trail's webpage to displ
 ### Some basic EDA
 After converting the mongo collections into pandas dataframe, I collected this data:
 
-![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png) ![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
+
+
+Solarized dark             |  Solarized Ocean
+:-------------------------:|:-------------------------:
+![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
 
 There are two things to notice here. First, 1 and 2 star reviewers are scarce, as is often the case with reviewers on passion sites (in conrast to, say, retail—think Amazon). More importantly for the question at hand: the 5-star comment percentage is lower than both 3 and 4 stars. From this we can already assume it is somewhat likely that comments are left less frequently by 5-star reviewers.
 
