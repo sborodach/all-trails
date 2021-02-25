@@ -24,3 +24,7 @@ _My Process_
 2. Use NLP to create summaries based on comments left by reviewers with 1-5 stars
 
 ![image](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
+
+![image](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
+
+![image](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png)
