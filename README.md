@@ -1,10 +1,10 @@
 ### Are some reviewers more likely to leave comments than others: <br/>    Comparing star rating reviews on AllTrails.com
 
 ### The story
-alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I notced that 5-star reviewers often leave no comment with their review. Similarly, 4-star reviewers seemed to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers..., and I think the answer why is fairly intuitive.
+alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I noticed that 5-star reviewers often leave no comment with their review. Similarly, it seemed to me that 4-star reviewers tend to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers since they have some feedback regarding their experience, while 5-star reviewers only have positive remarks and so leave comments less often. This project is my first step in answering this question by grouping reviewers based on star number and comparing the rates of comments they leave.
 
 ### Gathering the data
-I built a web-scraper using selenium to click through a trail's webpage to display all the reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. Here are images of the scraper in action:
+I built a web-scraper using selenium that scrools and clicks through a trail's webpage to display all hundreds or thousands of reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. Here are images of the scraper in action:
 
 ### Some basic EDA
 After converting the mongo collections into a pandas dataframe, I graphed these. The first is a distribution of reviewer ratings and the second the percent of reviews with comments grouped by star rating.
