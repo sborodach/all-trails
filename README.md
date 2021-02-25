@@ -1,4 +1,4 @@
-### AllTrails.com: Can we predict if a reviewer will leave a written comment with their star rating?
+### Are some reviewers more likely to leave comments than others? Comparing star rating reviews on AllTrails.com
 
 ### The story
 alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I notced that 5-star reviewers often leave no comment with their review. Similarly, 4-star reviewers seemed to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers..., and I think the answer why is fairly intuitive.
