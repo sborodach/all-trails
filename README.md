@@ -1,11 +1,13 @@
 **AllTrails.com**
 
-When I browse on All Trails to find a hike in at Bear Mountain in NY, I find myself looking to pick one hike to do, and wanting to easily have accurate and good information that can inform me if I will enjoy a specific hike. Reading through dozens of comments left by reviewers is boring and takes time, especially if I need to look through up to 5 trails before I find one with which I am satisfied. I think that recent comments left in the past 2-3 years are the most relevant, and having a summary of them would make selecting a trail ideal.
+### The story
+alltrails.com/us provides information and user reviews on hikes in the U.S. I frequent this site as a recreational hiker and in scrolling through comments I notced that 5-star reviewers often leave no comment with their review. Similarly, 4-star reviewers seemed to leave reviews at least as often as 5-star reviewers, and I wondered if it might be that 4-star reviewers leave comments more often than 5-star reviewers..., and I think the answer why is fairly intuitive.
 
-alltrails.com/us has information on many hiking trails here in the United States. I appreciate reading comments left by reviewers as they help me determine if a specific hike is for me, as well as what considerations I should take into account, like whether it's well-marked or heavily-trafficked. Reviews with 5 stars and no comment always stand out to me: if one had a great time on the hike, wouldn't you write what you loved about it? Similarly, 4-star reviews also stand out to me: what brings someone to leave a good review, but not a great one? Taking this one step further: when a 4-star reviewer leaves a comment, is it because they have something negative to say _with_ comments also stand out to me: The broad question I'm intersted in for this project is what brings a 4-star reviewer to leave a great review but leave out one star? Can this be determined from the comments that they leave? I hypothesize that 4-star reviewers are more inclined to leave a review, specifically 
+### Gathering the data
+I built a web-scraper using selenium to click through a trail's webpage to display all the reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. Here are images of the scraper in action:
 
-_My Process_
-1. Create pipeline to get reviewer data for one trail. Took me many revisions to get pipeline to be efficient. It works like this:
+### Some basic EDA
+Next I 
 2. Get data for three trails, each with at least 400 reviews:
     — 4 Stars: 47 / 206
     — 5 Stars: 75 / 361
