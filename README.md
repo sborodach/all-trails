@@ -20,7 +20,7 @@ There are two things to notice here. First, 1 and 2 star reviewers are scarce, a
 ### Comparing 3, 4, and 5 stars
 The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. Accounting for the Bonferroni Correction, I set the significance level at .017 and calculated the p-values for each comparison using a Welch's T-Test. Here are the results:
 <div style="float: right">
-![reject or fail to](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png){:style="float: right;margin-right: 7px;margin-top: 7px;"}
+![reject or fail to](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png)
 </div>
 
 We can see that the p-value for 4/5 and 3/5 star comparisons are below the significance level, while the 3/4 comparison is above. Thus, it is clear that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while there is insufficient evidence to show that 3 and 4 star reviewers leave comments at different rates.
