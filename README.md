@@ -30,4 +30,4 @@ After learning NLP, I would like to create summaries based on comments left by r
 ### Thank you
 to Juliana Duncan, Dan Rupp, and Kiara Hearn for their guidance and insight throughout this project.
 
-![tech stack](https://github.com/sborodach/all-trails/blob/main/images/tech_stack.png)
+![tech stack](https://github.com/sborodach/all-trails/blob/main/images/tech-stack.png)
