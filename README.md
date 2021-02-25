@@ -11,7 +11,7 @@ After converting the mongo collections into pandas dataframe, I collected this d
 
 
 
-Dark |  Solaized Ocean
+Distribution of Ratings |  Percentage Comments
 :-------------------------:|:-------------------------:
 ![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
 
