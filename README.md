@@ -19,9 +19,9 @@ There are two things to notice here. First, 1 and 2 star reviewers are scarce, a
 The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. Accounting for the Bonferroni Correction, I set the significance level at .017 and calculated the p-values for each comparison using a Welch's T-Test. Here are the results:
 
 <img align="right" width="400" height="400" src="https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png">
-////
+<br/><br/><br/><br/>
 We can see that the p-value for 4/5 and 3/5 star comparisons are below the significance level, while the 3/4 comparison is above. Thus, it is clear that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while there is insufficient evidence to show that 3 and 4 star reviewers leave comments at different rates.
-////
+<br/><br/><br/><br/>
 **Further Study:**
 After learning NLP, I would like to create summaries based on comments left by reviewers in each of the 5 star raating categories. I am most curious to learn if 4-star reviewers leave comments than their 5-star counterparts since they have some negative feedback or constructive criticsm to share in their reviews.
 
