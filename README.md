@@ -26,3 +26,5 @@ _My Process_
 ![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
 
 ![reject or fail to](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png)
+
+![tech stack](https://github.com/sborodach/all-trails/blob/main/images/tech_stack.pdf)
