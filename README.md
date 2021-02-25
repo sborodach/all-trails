@@ -5,6 +5,7 @@ alltrails.com/us provides information and user reviews on hikes in the U.S. I fr
 
 ### Gathering the data
 I built a web-scraper using selenium that scrools and clicks through a trail's webpage to display all hundreds or thousands of reviews, pyMongo to store the HTML, and BeautifulSoup to parse the data, extracting reviewer information. Here are images of the scraper in action:
+![selenium](https://github.com/sborodach/all-trails/blob/main/images/selenium.gif)
 
 ### Some basic EDA
 After converting the mongo collections into a pandas dataframe, I graphed these. The first is a distribution of reviewer ratings and the second the percent of reviews with comments grouped by star rating.
