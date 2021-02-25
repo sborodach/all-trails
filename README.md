@@ -1,5 +1,4 @@
-# cap-stone-1
-Galvanize DSI, Project 1
+**AllTrails.com**
 
 When I browse on All Trails to find a hike in at Bear Mountain in NY, I find myself looking to pick one hike to do, and wanting to easily have accurate and good information that can inform me if I will enjoy a specific hike. Reading through dozens of comments left by reviewers is boring and takes time, especially if I need to look through up to 5 trails before I find one with which I am satisfied. I think that recent comments left in the past 2-3 years are the most relevant, and having a summary of them would make selecting a trail ideal.
 
