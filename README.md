@@ -19,10 +19,10 @@ _My Process_
  
 
 **Further Study:**
-    * Use NLP to create summaries based on comments left by reviewers with 1-5 stars
+    *  Use NLP to create summaries based on comments left by reviewers with 1-5 stars
 
-![image](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
+![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
 
-![image](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
+![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
 
-![image](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png)
+![reject or fail to](https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png)
