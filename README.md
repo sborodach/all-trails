@@ -10,9 +10,8 @@ I built a web-scraper using selenium to click through a trail's webpage to displ
 ### Some basic EDA
 After converting the mongo collections into pandas dataframe, I collected this data:
 
-![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
-
 ![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_distribution.png)
+![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
 
 ### Comparing 3, 4, and 5 stars
 The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. The results show that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while there is insufficient evidence to 
