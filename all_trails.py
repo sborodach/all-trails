@@ -31,7 +31,8 @@ def get_all_trails_urls(park_url):
         
     html = driver.page_source
     soup = BeautifulSoup(html, 'html.parser')
-
+    driver.close()
+    
     # collect hrefs
     hrefs = []
     divs = soup.find_all('div', "styles-module__containerDescriptive___3aZqQ styles-module__trailCard___2oHiP")
@@ -44,7 +45,7 @@ def get_all_trails_urls(park_url):
 
         
 def get_all_trails_htmls(park_url, trails_urls):
-    '''Using selenium to get webpage html for trails on a specific mountain or in a '''
+    '''Using selenium to get webpage html for mountain/park trails'''
     for url in trails_urls:
     
         driver = webdriver.Chrome()
@@ -67,20 +68,21 @@ def get_all_trails_htmls(park_url, trails_urls):
 
         trail_name = "".join(((" ".join(((url.split('/'))[-1]).split('-'))).title()).split(" "))
         db[trail_name].insert_one({'link': url, 'html': html})
+        
+        driver.close()
 
 
-def get_reviewer_data(park_url, directory_path_to_save_csvs):
+def get_reviewer_data(park_url):
     '''Use stored html text in mongo to create mongo collection of hiking trail reviewer data'''
     
-    driver = webdriver.Chrome()
     client = MongoClient()
-    park_name = (url.split('/'))[-1]
+    park_name = (park_url.split('/'))[-1]
     db = client[park_name]
     
-    for i, trail in enumerate(list(db.list_collection_names())):
+    for i, trail in enumerate(list(db.list_collection_names())[1:]):
         trail_name = (list(db.list_collection_names()))[i]
         df = pd.DataFrame(list(db[trail].find({})))
-        soup = BeautifulSoup(df.iloc[i,2], 'html.parser')
+        soup = BeautifulSoup(df.iloc[0,2], 'html.parser')
 
         # getting trail title, description, difficulty, info
         soup.find('h1', class_='xlate-none styles-module__name___1nEtW').text.rstrip()
@@ -96,21 +98,31 @@ def get_reviewer_data(park_url, directory_path_to_save_csvs):
 
         # getting reviewer data for trail, appending to lists
         for i, review in enumerate(soup.find_all('div', itemprop="review")):
-            written_review = soup_reviews[i].find('p', itemprop="reviewBody")
+            d = {'ratings': [], 'dates': [], 'types': [], 'written_review': []}
+            d['ratings'] = ratings[i]['aria-label']
+            d['dates'] = dates[i].text.rstrip()
+            d['highlights'] = highlights[i].text.rstrip()
+            written_review = reviews[i].find('p', itemprop="reviewBody")
 
             if written_review == None:
-                review_text.append(None)
+                d['review_text'] = (None)
             else:
-                review_text.append(soup.find_all('div', class_="styles-module__container___3etfA")[i].find('p', itemprop="reviewBody").text.rstrip())
-            df = pd.DataFrame('ratings': ratings, 'dates': dates, 'highlights': highlights, 'comments': reivew_text)
-            df.to_csv(trail_name + '.csv', index = False)
+                d['review_text'] = reviews[i].find('p', itemprop="reviewBody").text.rstrip()
+        
+            db[trail_name].insert_one(d)
+
+'''Converting stored mongo collections into one concatenated pandas dataframe'''
+def panda_function():
+    client = MongoClient()
+    park_name = (url.split('/'))[-1]
+    db = client[park_name]
+    df = pd.DataFrame({'ratings': [], 'dates': [], 'highlights': [], 'review_text': []})
+    for i, trail in enumerate(list(db.list_collection_names())):
+        df1 = (pd.DataFrame(list(db[list(db.list_collection_names())[i]].find({}, {'_id':False, 'ratings':True, 'dates':True, 'highlights':True, 'review_text':True})))).iloc[1:,:]
+        df = pd.concat([df, df1])
 
 
-'''Concatenating sub-dataframes to form one dataframe'''
-df = pd.concat([bear_mount_df, pop_df, dund_df, ttt_df, perkins_df, doodle_df, tt_df, tttd_df, west_mount_df, bald_mount_df], ignore_index=True)
-
-
-def hist_star_rates(df):
+def plot_star_rates(df):
     '''Plotting historgram of star-rates'''
     total_reviews = df['ratings'].count()
 
