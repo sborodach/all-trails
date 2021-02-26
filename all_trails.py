@@ -12,46 +12,73 @@ from time import sleep
 from selenium import webdriver
 
 
-trails_urls = [] #urls for hike pages (e.g. https://www.alltrails.com/parks/us/new-york/bear-mountain-state-park?ref=result-card)
-db_name = 'bearmountain' #mountain/park name to be saved in mongo
-client = MongoClient()
-db = client[db_name]
+trails_urls = [] #must instantiate this empty list
+def get_all_trails_urls(park_url):
 
-def get_trails_html(urls):
+    '''Get all trails urls for specific mountain/park'''
+    driver = webdriver.Chrome()
+    driver.get(url)
+    sleep(3)
+    driver.execute_script("window.scrollTo(0, 3500)")
+    search = driver.find_element_by_class_name("styles-module__button___1nuva ")
+
+    for _ in range(100):
+        try:
+            search.click()
+            sleep(1)
+        except:
+            pass
+        
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+
+    # collect hrefs
+    hrefs = []
+    divs = soup.find_all('div', "styles-module__containerDescriptive___3aZqQ styles-module__trailCard___2oHiP")
+    for i, div in enumerate(divs):
+        hrefs.append(soup.find_all('div', "styles-module__containerDescriptive___3aZqQ styles-module__trailCard___2oHiP")[i].a['href'])
+
+    # concatenate website link with hrefs to get all park trail links
+    for i, href in enumerate(hrefs):
+        trails_urls.append('https://www.alltrails.com/' + href)
+
+        
+def get_all_trails_htmls(park_url, trails_urls):
     '''Using selenium to get webpage html for trails on a specific mountain or in a '''
-    for url in urls:
+    for url in trails_urls:
+    
         driver = webdriver.Chrome()
         client = MongoClient()
+        park_name = (url.split('/'))[-1]
+        db = client[park_name]
 
         driver.get(url)
         sleep(3)
-
         driver.execute_script("window.scrollTo(0, 10000)")
-
-        search = driver.find_element_by_css_selector("#reviews > div.styles-module__container___px-t2.xlate-none > button") # find 'show more reviews button'
-
-        # prevents error being thrown once total trail reviews is reached; 
-        showing_results = driver.find_element_by_css_selector('#reviews > div.styles-module__container___px-t2.xlate-none > div')
-        total_ = int(showing_results.text.split(' ')[-1])
-
-        # clicks through to see additional reviews
-        for _ in range(total_//30):
-            search.click()
-            sleep(1)
-
-        # get page html
+        search = driver.find_element_by_css_selector("#reviews > div.styles-module__container___px-t2.xlate-none > button")
+        for _ in range(100):
+            try:
+                search.click()
+                sleep(1)
+            except:
+                pass
         html = driver.page_source
         time.sleep(2)
 
-        # add html to mongo
         trail_name = "".join(((" ".join(((url.split('/'))[-1]).split('-'))).title()).split(" "))
-        pages = db[trail_name]
-        pages.insert_one({'link': url, 'html': html})
-    
+        db[trail_name].insert_one({'link': url, 'html': html})
 
-def get_reviewer_data(db):
+
+def get_reviewer_data(park_url, directory_path_to_save_csvs):
     '''Use stored html text in mongo to create mongo collection of hiking trail reviewer data'''
+    
+    driver = webdriver.Chrome()
+    client = MongoClient()
+    park_name = (url.split('/'))[-1]
+    db = client[park_name]
+    
     for i, trail in enumerate(list(db.list_collection_names())):
+        trail_name = (list(db.list_collection_names()))[i]
         df = pd.DataFrame(list(db[trail].find({})))
         soup = BeautifulSoup(df.iloc[i,2], 'html.parser')
 
@@ -61,60 +88,22 @@ def get_reviewer_data(db):
         soup.find('span', class_="styles-module__diff___22Qtv styles-module__moderate___3w1it styles-module__selected___3fawg").text.rstrip()
         soup.find('span', class_="styles-module__detailData___kQ-eK").text.rstrip()
 
-        soup_ratings = soup.find_all('span', class_="MuiRating-root default-module__rating___1k45X MuiRating-sizeLarge MuiRating-readOnly")
-        soup_dates = soup.find_all('span', class_="styles-module__dateTrailDetails___3qgZC xlate-none")
-        soup_types = soup.find_all('span', class_="styles-module__tag___2s-oD styles-module__activityTag___3-RdN")
-        soup_reviews = soup.find_all('div', class_="styles-module__container___3etfA")
+        ratings = list(soup.find_all('span', class_="MuiRating-root default-module__rating___1k45X MuiRating-sizeLarge MuiRating-readOnly"))
+        dates = list(soup.find_all('span', class_="styles-module__dateTrailDetails___3qgZC xlate-none"))
+        highlights = list(soup.find_all('span', class_="styles-module__tag___2s-oD styles-module__activityTag___3-RdN"))
+        reviews = list(soup.find_all('div', class_="styles-module__container___3etfA"))
+        review_text = []
 
         # getting reviewer data for trail, appending to lists
         for i, review in enumerate(soup.find_all('div', itemprop="review")):
-            d = {'ratings': [], 'dates': [], 'types': [], 'written_review': []}
-            d['ratings'] = soup_ratings[i]['aria-label']
-            d['dates'] = soup_dates[i].text.rstrip()
-            d['types'] = soup_types[i].text.rstrip()
-
             written_review = soup_reviews[i].find('p', itemprop="reviewBody")
 
             if written_review == None:
-                d['review_text'] = (None)
-
+                review_text.append(None)
             else:
-                d['review_text'] = (soup.find_all('div', class_="styles-module__container___3etfA")[i].find('p', itemprop="reviewBody").text.rstrip())
-
-            client = MongoClient()
-            db.trail.insert_one(d)
-            
-
-'''Converting stored mongo collections into pandas dataframes'''
-bear_mount = db.BearMountainLoopTrail
-bear_mount_df = (pd.DataFrame(list(bear_mount.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-pop = db.PopolopenTorneLoop
-pop_df = (pd.DataFrame(list(pop.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-dund = db.DunderbergBaldMountainAndTheTimpLoop
-dund_df = (pd.DataFrame(list(dund.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-ttt = db.TimpTorneTrail
-ttt_df = (pd.DataFrame(list(ttt.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-perkins = db.PerkinsMemorialTowerViaAppalachianTrail
-perkins_df = (pd.DataFrame(list(perkins.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-doodle = db.DoodletownBridlePathLoopTrail
-doodle_df = (pd.DataFrame(list(doodle.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-tt = db.TimpTrail
-tt_df = (pd.DataFrame(list(tt.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-tttd = db.TimpTorneTrailAndDunderbergSpiralRailwayAndLoop
-tttd_df = (pd.DataFrame(list(tttd.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-west_mount = db.WestMountainLoopTrail
-west_mount_df = (pd.DataFrame(list(west_mount.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
-
-bald_mount = db.BaldMountainLoop
-bald_mount_df = (pd.DataFrame(list(bald_mount.find({}, {'_id':False, 'ratings':True, 'dates':True, 'types':True, 'review_text':True})))).iloc[1:,:]
+                review_text.append(soup.find_all('div', class_="styles-module__container___3etfA")[i].find('p', itemprop="reviewBody").text.rstrip())
+            df = pd.DataFrame('ratings': ratings, 'dates': dates, 'highlights': highlights, 'comments': reivew_text)
+            df.to_csv(trail_name + '.csv', index = False)
 
 
 '''Concatenating sub-dataframes to form one dataframe'''
