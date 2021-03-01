@@ -11,14 +11,14 @@ After converting the mongo collections into a pandas dataframe, I graphed these.
 
 Distribution of Ratings |  Percentage Comments
 :-------------------------:|:-------------------------:
-![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings-rates.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percentage_comments.png)
+![ratings distribution](https://github.com/sborodach/all-trails/blob/main/images/ratings_rates.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/images/percent_comments.png)
 
 There are two things to notice here. First, 1 and 2 star reviewers are scarce, as is often the case with reviewers on passion sites (in conrast to, say, retail—think Amazon). More importantly for the question at hand: the 5-star comment percentage is lower than both 3 and 4 stars. From this we can already assume it is somewhat likely that comments are left less frequently by 5-star reviewers.
 
 ### Comparing 3, 4, and 5 stars
 The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. Accounting for the Bonferroni Correction, I set the significance level at .017 and calculated the p-values for each comparison using a Welch's T-Test. Here are the results:
 
-<img align="right" width="400" height="400" src="https://github.com/sborodach/all-trails/blob/main/images/reject_or_fail_to.png">
+<img align="right" width="400" height="400" src="https://github.com/sborodach/all-trails/blob/main/images/reject_or_not.png">
 <br/><br/><br/><br/><br/>
 We can see that the p-value for 3/5 and 4/5 star comparisons are below the significance level, while the 3/4 comparison is above. Thus, there is sufficient evidence to suggest that 5 star reviewers leave comments at a different rate than both 3 and 4 star reviewers, while evidence is lacking that 3 and 4 star reviewers leave comments at different rates. This confirms predictions based on the EDA.
 <br/><br/><br/><br/><br/><br/><br/>
