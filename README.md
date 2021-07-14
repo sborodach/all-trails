@@ -13,7 +13,7 @@ Distribution of Ratings |  Percentage Comments
 :-------------------------:|:-------------------------:
 ![ratings distribution](https://github.com/sborodach/all-trails/blob/main/img/ratings_rates.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/img/percentage_comments.png)
 
-There are two things to notice here. First, 1 and 2 star reviewers are scarce, as is often the case with reviewers on passion sites (in conrast to, say, retail—like Amazon). Since More importantly for the question at hand: the 5-star comment percentage is lower than both 3 and 4 stars. From this we can already assume it is somewhat likely that comments are left less frequently by 5-star reviewers.
+There are two things to notice here. First, 1 and 2 star reviewers are scarce, as is often the case with reviewers on passion sites (in conrast to, say, retail—like Amazon). More importantly for the question at hand: the 5-star comment percentage is lower than both 3 and 4 stars. From this we can already assume it is somewhat likely that comments are left less frequently by 5-star reviewers.
 
 ### Comparing 3, 4, and 5 stars
 The null hypothesis for each test is nearly the same: comments are left at an equal rate between two of the three star groups, and the alternative hypothesis suggests there is some difference. Accounting for the Bonferroni Correction, I set the significance level at .017 and calculated the p-values for each comparison using a Welch's T-Test. Here are the results:
