@@ -11,7 +11,7 @@ After converting the mongo collections into a pandas dataframe, I graphed these.
 
 Distribution of Ratings |  Percentage Comments
 :-------------------------:|:-------------------------:
-![ratings distribution](https://github.com/sborodach/all-trails/blob/main/img/ratings_rates.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/img/percent_comments.png)
+![ratings distribution](https://github.com/sborodach/all-trails/blob/main/img/ratings_rates.png)  | ![percent comments](https://github.com/sborodach/all-trails/blob/main/img/percentage_comments.png)
 
 There are two things to notice here. First, 1 and 2 star reviewers are scarce, as is often the case with reviewers on passion sites (in conrast to, say, retail—like Amazon). Since More importantly for the question at hand: the 5-star comment percentage is lower than both 3 and 4 stars. From this we can already assume it is somewhat likely that comments are left less frequently by 5-star reviewers.
 
